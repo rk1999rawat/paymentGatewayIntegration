@@ -1,0 +1,1044 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Balsamiq Sans', cursive;
+        }
+
+        .logo {
+            color: #fff;
+        }
+
+        .navbar-custom {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            background-color: rgba(7, 7, 7, 0.582);
+        }
+
+        .hero {
+            padding-top: 10.5rem;
+            padding-bottom: 6rem;
+            text-align: center;
+            color: #000;
+            background-image: url("https://source.unsplash.com/1650x950/?mountain,Donation");
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            background-position: center;
+            background-size: cover;
+        }
+
+        header.hero .hero-heading {
+            font-size: 3.25rem;
+            font-weight: bold;
+            line-height: 3.25rem;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        /*Major Causes Section*/
+        .page-section h2.section-heading {
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .page-section h3.section-subheading {
+            font-size: 1rem;
+            font-weight: 400;
+            font-style: italic;
+            margin-bottom: 4rem;
+        }
+
+        /*End of Major Causes Section */
+        /*Project Section */
+        #project .project-item {
+            max-width: 25rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #project .project-item .project-link {
+            position: relative;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #project .project-item .project-link .project-hover {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(254, 209, 54, 0.9);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity ease-in-out 0.25s;
+        }
+
+        #project .project-item .project-link .project-hover .project-hover-content {
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        #project .project-item .project-link:hover .project-hover {
+            opacity: 1;
+        }
+
+        #project .project-item .project-caption {
+            padding: 1.5rem;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        #project .project-item .project-caption .project-caption-heading {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+
+        #project .project-item .project-caption .project-caption-subheading {
+            font-style: italic;
+        }
+
+        .project-modal .modal-dialog {
+            margin: 1rem;
+            max-width: 100vw;
+        }
+
+        .project-modal .modal-content {
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+            text-align: center;
+        }
+
+        .project-modal .modal-content h2 {
+            font-size: 3rem;
+            line-height: 3rem;
+        }
+
+        .project-modal .modal-content p.item-intro {
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .project-modal .modal-content p {
+            margin-bottom: 2rem;
+        }
+
+        .project-modal .modal-content ul.list-inline {
+            margin-bottom: 2rem;
+        }
+
+        .project-modal .modal-content img {
+            margin-bottom: 2rem;
+        }
+
+        .project-modal .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            background-color: transparent;
+        }
+
+        .project-modal .close-modal:hover {
+            opacity: 0.3;
+        }
+
+        /*End of Project*/
+        /* About section*/
+
+        .about {
+            padding: 10px 0 0 0;
+        }
+
+        .about .icon-boxes h3 {
+            font-size: 35px;
+            font-weight: bold;
+            color: #080808;
+            margin-bottom: 15px;
+        }
+
+        .about .icon-box {
+            margin-top: 40px;
+        }
+
+        .about .icon-box .icon {
+            float: left;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border: 2px solid #cc1c05;
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+
+        .about .icon-box .icon i {
+            color: #cc1c05;
+            font-size: 32px;
+        }
+
+        .about .icon-box:hover .icon {
+            background: #cc1c05;
+            border-color: #cc1c05
+        }
+
+        .about .icon-box:hover .icon i {
+            color: #fff;
+        }
+
+        .about .icon-box .title {
+            margin-left: 85px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .about .icon-box .title a {
+            color: #343a40;
+            transition: 0.3s;
+        }
+
+        .about .icon-box .title a:hover {
+            color: #cc1c05;
+        }
+
+        .about .icon-box .description {
+            margin-left: 85px;
+            line-height: 24px;
+            font-size: 14px;
+        }
+
+        /* end of About Section*/
+        /*Team Section*/
+
+        .box {
+            position: relative;
+            width: 280px;
+            height: 400px;
+            margin: 20px 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .box .img-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            clip-path: circle(400px at center 100px);
+            transition: 0.5s;
+            transition-delay: 0.5s;
+        }
+
+        .box:hover .img-box {
+            clip-path: circle(80px at center 100px);
+            transition-delay: 0s;
+        }
+
+        .box .img-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .box .content {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 55%;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .box .content h2 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box .content a {
+            text-decoration: none;
+            background: #000;
+            color: #fff;
+            padding: 5px;
+            display: inline-block;
+        }
+
+        .box .content h2,
+        .box .content p,
+        .box .content a {
+            opacity: 0;
+            transition: 0.5s;
+            transform: translateY(20px);
+        }
+
+        .box:hover .content h2 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.5s
+        }
+
+        .box:hover .content p {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.7s
+        }
+
+        .box:hover .content a {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.9s
+        }
+
+        /* End of Team Section*/
+        /* Blog Section */
+        .ribbon {
+            width: 100px;
+            height: 100px;
+            margin: -10px auto;
+            background: #f0d803;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .ribbon:before {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            left: 0;
+            border-left: 75px solid #f0d803;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+        }
+
+        .ribbon:after {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            right: 0;
+            border-right: 75px solid #f0d803;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+
+        }
+
+        .text {
+            text-align: center;
+
+        }
+
+        .btn-color {
+            background: #f0d803;
+        }
+
+
+        /*End of Blog Section*/
+
+
+        /*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+        .contact .info {
+            padding: 20px 40px;
+            background: #f7e759;
+            color: #131313;
+            text-align: center;
+            border: 1px solid #fff;
+        }
+
+        .contact .info i {
+            font-size: 30px;
+            color: #a31818;
+            margin-bottom: 15px;
+        }
+
+        .contact .info h4 {
+            padding: 0;
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .contact .info p {
+            font-size: 15px;
+        }
+
+        .rounded-cor {
+            border-radius: 50px;
+        }
+
+        /*Footer*/
+        .social {
+            display: flex;
+            width: 250px;
+            justify-content: space-between;
+            list-style: none;
+        }
+
+        .social .list-item {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .social .list-item:after,
+        .social .list-item:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, red, yellow);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0;
+            transition: 1s;
+        }
+
+        .social .list-item:after {
+            filter: blur(20px);
+        }
+
+        .social .list-item:hover:before,
+        .social .list-item:hover:after {
+            opacity: 1;
+        }
+
+        .social .list-item .list-link {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            background: #000;
+            font-size: 28px;
+            border-radius: 50%;
+            transition: 2s;
+        }
+
+        .social .list-item .list-link i {
+            text-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+
+        }
+
+        .social .list-item:nth-child(1) a,
+        .social .list-item:nth-child(1):before,
+        .social .list-item:nth-child(1):after {
+            background: linear-gradient(45deg, #00aeff, #a200ff);
+        }
+
+        .social .list-item:nth-child(2) a,
+        .social .list-item:nth-child(2):before,
+        .social .list-item:nth-child(2):after {
+            background: linear-gradient(45deg, #00a2ff, #ff1e00);
+        }
+
+        .social .list-item:nth-child(3) a,
+        .social .list-item:nth-child(3):before,
+        .social .list-item:nth-child(3):after {
+            background: linear-gradient(45deg, #ff008c, #ce6708);
+        }
+
+        .social .list-item:nth-child(4) a,
+        .social .list-item:nth-child(4):before,
+        .social .list-item:nth-child(4):after {
+            background: linear-gradient(45deg, #0791c7, #f794a5);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <span class="logo">Care For</span>
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">Menu
+                <i class="fas fa-bars ml-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#causes">Causes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#project">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero-->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-heading text-uppercase">We care for you </div>
+            <a class="btn btn-danger btn-lg text-uppercase js-scroll-trigger" href="/donations">Donate Us</a>
+
+
+
+
+        </div>
+        </div>
+    </header>
+    <!--end of Hero Image-->
+    <!-- Major Causes-->
+    <section class="mt-5 page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase font-weight-bold">Major Causes</h2>
+                <h3 class="section-subheading text-muted">
+                    Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-danger"></i>
+                        <i class="fas fa-hand-holding-usd fa-stack-1x fa-inverse"></i>
+
+                    </span>
+                    <h4 class="my-3">Give Donations</h4>
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                        adipisicing elit. Minima maxime quam architecto quo inventore
+                        harum ex magni, dicta impedit.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-warning"></i>
+                        <i class="fas fa-lightbulb fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Give Inspiration</h4>
+                    <p class="text-muted">Lorem ipsum dolor sit amet,
+                        consectetur adipisicing elit. Minima maxime quam
+                        architecto quo inventore harum ex magni, dicta impedit.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-success"></i>
+                        <i class="fas fa-tshirt fa-stack-1x fa-inverse"></i>
+                    </span>
+
+                    <h4 class="my-3">Become Volunteer</h4>
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur
+                        adipisicing elit. Minima maxime quam architecto quo inventore
+                        harum ex magni, dicta impedit.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End of Major Causes-->
+    <!--Project Section-->
+    <section class="proj-section bg-light py-5" id="project">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Projects</h2>
+                <h3 class="section-subheading text-muted">
+                    Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+            <div class="row">
+                <!---Project 1-->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="project-item">
+                        <a class="project-link" data-toggle="modal" href="#projectModal1">
+                            <div class="project-hover">
+                                <div class="project-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img src="Images/porj1.jpg" class="img-fluid" alt="">
+                        </a>
+                        <div class="project-caption">
+                            <div class="project-caption-heading">Lorem</div>
+                            <div class="project-caption-subheading text-muted">
+                                Ipsum</div>
+                        </div>
+                    </div>
+                </div>
+                <!--- End of Project 1-->
+                <!---Project 2-->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="project-item">
+                        <a class="project-link" data-toggle="modal" href="#projectModal2">
+                            <div class="project-hover">
+                                <div class="project-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="Images/porj2.jpg" alt="" />
+                        </a>
+                        <div class="project-caption">
+                            <div class="project-caption-heading">Factories</div>
+                            <div class="project-caption-subheading text-muted">Smoke</div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Project 2-->
+                <!--Project 3-->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="project-item">
+                        <a class="project-link" data-toggle="modal" href="#projectModal3">
+                            <div class="project-hover">
+                                <div class="project-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="Images/porj3.jpg" alt="">
+                        </a>
+                        <div class="project-caption">
+                            <div class="project-caption-heading">Flowers</div>
+                            <div class="project-caption-subheading text-muted">Kinds</div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Project 3-->
+                <!--Project4 -->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="project-item">
+                        <a class="project-link" data-toggle="modal" href="#projectModal3">
+                            <div class="project-hover">
+                                <div class="project-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="Images/porj4.jpg" alt="">
+                        </a>
+                        <div class="project-caption">
+                            <div class="project-caption-heading">Nature</div>
+                            <div class="project-caption-subheading text-muted">Peace</div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Project 4-->
+                <!--Project5 -->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="project-item">
+                        <a class="project-link" data-toggle="modal" href="#projectModal3">
+                            <div class="project-hover">
+                                <div class="project-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="Images/porj5.jpg" alt="">
+                        </a>
+                        <div class="project-caption">
+                            <div class="project-caption-heading">Earth</div>
+                            <div class="project-caption-subheading text-muted">Water</div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Project 5-->
+                <!--Project6 -->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="project-item">
+                        <a class="project-link" data-toggle="modal" href="#projectModal3">
+                            <div class="project-hover">
+                                <div class="project-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="Images/porj6.jpg" alt="">
+                        </a>
+                        <div class="project-caption">
+                            <div class="project-caption-heading">Plants</div>
+                            <div class="project-caption-subheading text-muted">Fruits</div>
+                        </div>
+                    </div>
+                </div>
+                <!--End of Project 6-->
+
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+    <!--End of Project Section-->
+    <!---About us-->
+    <!-- About-->
+    <section class="about-section mt-5" id="about">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">About</h2>
+                <h3 class="section-subheading text-muted">
+                    Lorem ipsum dolor sit amet consectetur.</h3>
+            </div>
+            <!-- ======= About Section ======= -->
+            <section id="about" class="about">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-6 d-flex justify-content-center align-items-stretch"
+                            data-aos="fade-right">
+                            <img src="Images/about.jpg" class="img-fluid" alt="">
+                        </div>
+
+                        <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5"
+                            data-aos="fade-left">
+                            <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
+                            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed
+                                minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi.
+                                Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
+                            <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+                                <div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                                <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+                                <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias
+                                    excepturi sint occaecati cupiditate non provident</p>
+                            </div>
+
+                            <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+                                <div class="icon"><i class="fas fa-gifts"></i></div>
+                                <h4 class="title"><a href="">Nemo Enim</a></h4>
+                                <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui
+                                    blanditiis praesentium voluptatum deleniti atque</p>
+                            </div>
+
+                            <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+                                <div class="icon"><i class="fas fa-mug-hot"></i></div>
+                                <h4 class="title"><a href="">Dine Pad</a></h4>
+                                <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et
+                                    veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <!-- End About Section -->
+
+
+            <!-- Project Modals-->
+            <!-- Modal 1-->
+            <div class="project-modal modal fade" id="projectModal1" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="modal-body">
+                                        <!-- Project Details Go Here-->
+                                        <h2 class="text-uppercase">Project Name</h2>
+                                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet
+                                            consectetur.</p>
+                                        <img class="img-fluid d-block mx-auto" src="Images/porj1.jpg" alt="" />
+                                        <p>Use this area to describe your project. Lorem ipsum dolor sit
+                                            amet, consectetur adipisicing elit. Est blanditiis dolorem
+                                            culpa incidunt minus dignissimos deserunt repellat aperiam
+                                            quasi sunt officia expedita beatae cupiditate, maiores
+                                            repudiandae, nostrum, reiciendis facere nemo!</p>
+                                        <ul class="list-inline">
+                                            <li>Date: May 2020</li>
+                                            <li>Category: lorem Ipsum</li>
+                                        </ul>
+                                        <button class="btn btn-danger" data-dismiss="modal" type="button">
+                                            <i class="fas fa-times mr-1"></i>Close Project</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal 2-->
+            <div class="project-modal modal fade" id="projectModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="modal-body">
+                                        <!-- Project Details Go Here-->
+                                        <h2 class="text-uppercase">Project Name</h2>
+                                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet
+                                            consectetur.</p>
+                                        <img src="Images/porj2.jpg" class="img-fluid d-block mx-auto" alt="" />
+                                        <p>Use this area to describe your project. Lorem ipsum dolor sit amet,
+                                            consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus
+                                            dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae
+                                            cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                        <ul class="list-inline">
+                                            <li>Date: May 2020</li>
+                                            <li>Category: Lorem Ipsum</li>
+                                        </ul>
+                                        <button class="btn btn-danger" data-dismiss="modal" type="button">
+                                            <i class="fas fa-times mr-1"></i>Close Project</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal 3-->
+            <div class="project-modal modal fade" id="projectModal3" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="modal-body">
+                                        <!-- Project Details Go Here-->
+                                        <h2 class="text-uppercase">Project Name</h2>
+                                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <img src="Images/porj3.jpg" class="img-fluid d-block mx-auto" alt="" />
+                                        <p>Use this area to describe your project. Lorem ipsum dolor sit amet,
+                                            consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus
+                                            dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae
+                                            cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                        <ul class="list-inline">
+                                            <li>Date: May 2020</li>
+                                            <li>Category: Lorem Ipsum</li>
+                                        </ul>
+                                        <button class="btn btn-danger" data-dismiss="modal" type="button"><i
+                                                class="fas fa-times mr-1"></i>Close Project</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal 4-->
+            <div class="project-modal modal fade" id="projectModal4" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="modal-body">
+                                        <!-- Project Details Go Here-->
+                                        <h2 class="text-uppercase">Project Name</h2>
+                                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <img src="images/porj4.jpg" class="img-fluid d-block mx-auto" alt="" />
+                                        <p>Use this area to describe your project.
+                                            Lorem ipsum dolor sit amet, consectetur
+                                            adipisicing elit. Est blanditiis dolorem
+                                            culpa incidunt minus dignissimos deserunt
+                                            repellat aperiam quasi sunt officia expedita
+                                            beatae cupiditate, maiores repudiandae, nostrum,
+                                            reiciendis facere nemo!</p>
+                                        <ul class="list-inline">
+                                            <li>Date: May 2020</li>
+                                            <li>Category: Lorem Ipsum</li>
+                                        </ul>
+                                        <button class="btn btn-danger" data-dismiss="modal" type="button"><i
+                                                class="fas fa-times mr-1"></i>Close Project</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal 5-->
+            <div class="project-modal modal fade" id="projectModal5" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="modal-body">
+                                        <!-- Project Details Go Here-->
+                                        <h2 class="text-uppercase">Project Name</h2>
+                                        <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                        <img src="Images/porj5.jpg" class="img-fluid d-block mx-auto" alt="">
+                                        <p>Use this area to describe your project. Lorem ipsum dolor sit amet,
+                                            consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus
+                                            dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae
+                                            cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                        <ul class="list-inline">
+                                            <li>Date: May 2020</li>
+                                            <li>Category: lorem Ipsum</li>
+                                        </ul>
+                                        <button class="btn btn-danger" data-dismiss="modal" type="button"><i
+                                                class="fas fa-times mr-1"></i>Close Project</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal 6-->
+
+            <!--Footer Section-->
+            <!-- Signup-->
+            <section class="signup-section mt-5" id="signup">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-lg-8 mx-auto text-center">
+                            <h2 class="text-dark mb-5">Subscribe to receive updates!</h2>
+                            <form class="form-inline d-flex">
+                                <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail"
+                                    type="email" placeholder="Enter email address...">
+                                <button class="btn btn-danger mx-auto" type="submit">
+                                    Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ======= Contact Section ======= -->
+            <section id="contact" class="contact mt-5">
+                <div class="container">
+                    <div class="text-center">
+                        <h2 class="section-heading text-uppercase">Contact</h2>
+                        <h3 class="section-subheading text-muted">Lorem ipsum dolor
+                            sit amet consectetur.</h3>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6 info">
+                                    <i class="fas fa-map"></i>
+                                    <h4>Address</h4>
+                                    <p>lorem ipsum Street,<br>Sao Paulo, SP 456879</p>
+                                </div>
+                                <div class="col-lg-6 info">
+                                    <i class="fas fa-phone"></i>
+                                    <h4>Call Us</h4>
+                                    <p>+55 61 12365478<br>+55 61 23154687</p>
+                                </div>
+                                <div class="col-lg-6 info">
+                                    <i class="fas fa-envelope"></i>
+                                    <h4>Email Us</h4>
+                                    <p>contact@test.com<br>test@example.com</p>
+                                </div>
+                                <div class="col-lg-6 info">
+                                    <i class="fas fa-clock"></i>
+                                    <h4>Working Hours</h4>
+                                    <p>Mon - Fri: 9AM to 5PM<br>Sunday: 9AM to 1PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <form>
+                                <div class="form-group">
+                                    <input placeholder="Your Name" type="text" name="name" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input placeholder="Your Email" type="email" class="form-control" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <input placeholder="Subject" type="text" class="form-control" name="subject">
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="Message" class="form-control" name="message"
+                                        rows="5"></textarea>
+                                    <div class="validate"></div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-danger rounded-cor">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Contact Section -->
+            <!-- ======= Footer ======= -->
+            <footer class="mt-5" id="footer">
+                <div class="container d-md-flex py-4">
+                    <div class="mr-md-auto text-center text-md-left">
+                        <div class="copyright">
+                            &copy; Copyright <strong><span>Care For</span></strong>. All Rights Reserved
+                        </div>
+                    </div>
+                    <div class="social-links text-center text-md-right pt-3 pt-md-0">
+                        <ul class="social">
+                            <li class="list-item">
+                                <a class="list-link" href="#">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li class="list-item">
+                                <a class="list-link" href="#">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-item">
+                                <a class="list-link" href="#">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="list-item">
+                                <a class="list-link" href="#">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </footer><!-- End Footer -->
+
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+                crossorigin="anonymous"></script>
+</body>
+
+
+{% endblock %}
